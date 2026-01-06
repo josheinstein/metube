@@ -404,7 +404,7 @@
         </tr>
       </thead>
       <tbody>
-        @for (download of downloads.done | keyvalue: asIsOrder; track download.value.id) {
+        @for (download of downloads.done | keyvalue: orderByTimeStamp; track download.value.id) {
           <tr [class.disabled]='download.value.deleting'>
             <td>
               <app-slave-checkbox [id]="download.key" [master]="doneMasterCheckboxRef" [checkable]="download.value" />

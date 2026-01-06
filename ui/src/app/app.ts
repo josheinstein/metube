@@ -166,6 +166,25 @@ export class App implements AfterViewInit, OnInit {
     return 1;
   }
 
+  orderByTimeStamp = (a: any, b: any): number => {
+
+    try {
+
+        const reverseHistory: boolean = this.downloads.configuration['REVERSE_HISTORY_ORDER'];
+        
+        const timestampA = a.value.timestamp || 0;
+        const timestampB = b.value.timestamp || 0;
+        // Negative = a comes first, positive = b comes first
+        // For reverse chronological (newest first): if B is newer, it should come first
+        return reverseHistory ? (timestampB - timestampA) : (timestampA - timestampB);
+
+    }
+    catch {
+        return 1;
+    }
+
+  }
+
   qualityChanged() {
     this.cookieService.set('metube_quality', this.quality, { expires: 3650 });
     // Re-trigger custom directory change
