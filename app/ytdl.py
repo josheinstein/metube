@@ -520,6 +520,11 @@ class DownloadQueue:
         return {'status': 'ok'}
 
     def get(self):
-        return (list((k, v.info) for k, v in self.queue.items()) +
-                list((k, v.info) for k, v in self.pending.items()),
-                list((k, v.info) for k, v in self.done.items()))
+        queue = list((k, v.info) for k, v in self.queue.items())
+        pending = list((k, v.info) for k, v in self.pending.items())
+        done = list((k, v.info) for k, v in self.done.items())
+
+        if self.config.REVERSE_HISTORY_ORDER:
+            done.reverse()
+
+        return (queue + pending, done)
